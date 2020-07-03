@@ -19,10 +19,10 @@ function formatter(inputString) {
 }
 
 function displayExchange(exchange) {
-  const amount = $('#amount').val();
+  const amount = parseInt($('#amount').val()).toFixed(2);
   const inputName = formatter($('#convertFrom').children(':selected').attr('id'));
   const outputName = formatter($('#convertTo').children(':selected').attr('id'));
-  $('#output').html(`<p>${amount} ${inputName} is worth ${exchange} ${outputName}`);
+  $('#output').html(`<p>${amount} ${inputName} is worth ${exchange} ${outputName}</p>`);
 }
 
 function displayError() {
@@ -43,6 +43,7 @@ $(document).ready(function() {
         await currencyService.currencyInitialize();
       }
       exchange = convertCurrency(amount, convertFrom, convertTo, currencyService);
+      $('#output').show();
       if (convertCurrency) {
         displayExchange(exchange);
       } else {
