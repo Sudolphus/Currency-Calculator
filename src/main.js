@@ -5,12 +5,11 @@ import './styles.css';
 import { CurrencyService } from './currencyService';
 
 $(document).ready(function() {
-  $("#getRates").click(function() {
-    let currencyService = new CurrencyService();
-    (async ()=>{
-      currencyService.currencyExchange = await currencyService.currencyInitialize();
-      // eslint-disable-next-line no-console
-      console.log(currencyService.currencyExchange);
-    })();
-  });
+  let currencyService = new CurrencyService();
+  (async ()=>{
+    await currencyService.currencyInitialize();
+    // eslint-disable-next-line no-console
+    console.log(currencyService.currencyExchange);
+    alert(currencyService.currencyGet('AED'));
+  })();
 });
