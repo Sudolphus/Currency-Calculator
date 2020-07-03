@@ -12,8 +12,11 @@ _This app converts to other currencies, using the API provided by `ExchangeRate-
 
 | Spec | Input | Output |
 | :-------------     | :------------- | :------------- |
-| **Homepage** | User accesses localhost:5004 | Homepage with user input form |
-| **Program Gathers User Input** | User input: "10" | Output: "10" |
+| **Program gets currency exchange rate from API** | User selects: None | Output: Currency object |
+| **Program Lets User Enter Dollar Amount** | User selects: "10" | Output: "10" |
+| **Program Lets User Enter Currency to Convert To** | User selects: "Euro" | Output: "Euro" |
+| **Program Calculates Exchange Rate** | User selects: "Euro" | Output: ".89" |
+| **Program Calculates Currency Exchange** | User selects: "10, Euro" | Output: "8.90" |
 
 
 ## Setup/Installation Requirements
