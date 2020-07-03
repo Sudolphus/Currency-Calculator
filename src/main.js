@@ -25,8 +25,8 @@ function displayExchange(exchange) {
   $('#output').html(`<p>${amount} ${inputName} is worth ${exchange} ${outputName}</p>`);
 }
 
-function displayError() {
-  $("#output").html(`<p>That currency does not exist!</p>`);
+function displayError(message) {
+  $("#output").html(`<p>${message}</p>`);
 }
 
 $(document).ready(function() {
@@ -34,20 +34,28 @@ $(document).ready(function() {
 
   $('form').submit(function(event) {
     event.preventDefault();
-    const amount = $("#amount").val();
+    const amount = parseInt($("#amount").val());
+    if (!amount) {
+      displayError('Please select an amount to be converted');
+      return;
+    }
     const convertFrom = $('#convertFrom').val();
     const convertTo = $('#convertTo').val();
     let exchange;
     (async ()=>{
-      if (!currencyService.currencyExchange) {
+      if (!currencyService.currencyExchange || currencyService.currencyExchange === 'Error retrieving conversion rates') {
         await currencyService.currencyInitialize();
+      }
+      if (currencyService.currencyExchange === 'Error retrieving conversion rates') {
+        displayError('Error retrieving conversion rates');
+        return;
       }
       exchange = convertCurrency(amount, convertFrom, convertTo, currencyService);
       $('#output').show();
       if (convertCurrency) {
         displayExchange(exchange);
       } else {
-        displayError();
+        displayError('That currency does not exist!');
       }
     })();
   });

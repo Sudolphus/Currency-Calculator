@@ -17,8 +17,7 @@ export class CurrencyService {
       const currencyArray = currencyJSON["conversion_rates"];
       return currencyArray;
     } catch(error) {
-      // eslint-disable-next-line no-console
-      console.log(error.message);
+      return 'Error retrieving conversion rates';
     }
   }
 

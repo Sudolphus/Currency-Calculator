@@ -16,6 +16,10 @@ body {
   text-align: center;
 }
 
+.page-header {
+  font-family: 'Times New Roman', Times, serif;
+}
+
 label {
   font-weight: bold;
   font-size: 12px;
@@ -25,8 +29,16 @@ label {
 #output {
   display: none;
   margin-top: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   background: rgba(212, 175, 55, .5);
   border: .5px solid black;
+}
+
+#output > p {
+  display: inline-block;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 #photoCred {
