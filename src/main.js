@@ -6,7 +6,7 @@ import { CurrencyService } from './currency-service';
 import { convertCurrency } from './convert';
 
 function formatter(inputString) {
-  let newStringArray = inputString.slice(inputString.search(/[A-Z]/), inputString.length).split('');
+  const newStringArray = inputString.slice(inputString.search(/[A-Z]/), inputString.length).split('');
   let newString = '';
   newStringArray.forEach((letter) => {
     if (letter.search(/[A-Z]/) > -1) {
@@ -42,14 +42,13 @@ $(document).ready(function() {
         }
         const convertFrom = $('#convertFrom').val();
         const convertTo = $('#convertTo').val();
-        let exchange;
         if (!currencyService.currencyExchange || currencyService.currencyExchange === 'Error retrieving conversion rates') {
           await currencyService.currencyInitialize();
         }
         if (currencyService.currencyExchange === 'Error retrieving conversion rates') {
           throw Error('Error retrieving conversion rates');
         }
-        exchange = convertCurrency(amount, convertFrom, convertTo, currencyService);
+        const exchange = convertCurrency(amount, convertFrom, convertTo, currencyService);
         $('#output').show();
         if (convertCurrency) {
           displayExchange(exchange);

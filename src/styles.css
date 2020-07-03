@@ -26,6 +26,14 @@ label {
   font-family: 'Courier New', Courier, monospace;
 }
 
+a {
+  color: green;
+}
+
+a:hover, a:focus {
+  color: darkgreen;
+}
+
 #output {
   display: none;
   margin-top: 5px;
