@@ -34,7 +34,7 @@ function displayError(message) {
 function gatherUserInput() {
   const amount = parseInt($("#amount").val());
   if (!amount) {
-    return;
+    return [null, null, null];
   }
   const convertFrom = $('#convertFrom').val();
   const convertTo = $('#convertTo').val();
@@ -50,7 +50,7 @@ $(document).ready(function() {
       try {
         const [amount, convertFrom, convertTo] = gatherUserInput();
         if (!amount) {
-          throw Error('Please enter an amount to be conveted');
+          throw Error('Please enter an amount to be converted');
         }
         if (!currencyService.currencyExchange || currencyService.currencyExchange === 'Error retrieving conversion rates') {
           await currencyService.currencyInitialize();
