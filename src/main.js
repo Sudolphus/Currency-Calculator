@@ -34,28 +34,30 @@ $(document).ready(function() {
 
   $('form').submit(function(event) {
     event.preventDefault();
-    const amount = parseInt($("#amount").val());
-    if (!amount) {
-      displayError('Please select an amount to be converted');
-      return;
-    }
-    const convertFrom = $('#convertFrom').val();
-    const convertTo = $('#convertTo').val();
-    let exchange;
     (async ()=>{
-      if (!currencyService.currencyExchange || currencyService.currencyExchange === 'Error retrieving conversion rates') {
-        await currencyService.currencyInitialize();
-      }
-      if (currencyService.currencyExchange === 'Error retrieving conversion rates') {
-        displayError('Error retrieving conversion rates');
-        return;
-      }
-      exchange = convertCurrency(amount, convertFrom, convertTo, currencyService);
-      $('#output').show();
-      if (convertCurrency) {
-        displayExchange(exchange);
-      } else {
-        displayError('That currency does not exist!');
+      try {
+        const amount = parseInt($("#amount").val());
+        if (!amount) {
+          throw Error('Please select an amount to be converted');
+        }
+        const convertFrom = $('#convertFrom').val();
+        const convertTo = $('#convertTo').val();
+        let exchange;
+        if (!currencyService.currencyExchange || currencyService.currencyExchange === 'Error retrieving conversion rates') {
+          await currencyService.currencyInitialize();
+        }
+        if (currencyService.currencyExchange === 'Error retrieving conversion rates') {
+          throw Error('Error retrieving conversion rates');
+        }
+        exchange = convertCurrency(amount, convertFrom, convertTo, currencyService);
+        $('#output').show();
+        if (convertCurrency) {
+          displayExchange(exchange);
+        } else {
+          throw Error('That currency does not exist!');
+        }
+      } catch(error) {
+        displayError(error.message);
       }
     })();
   });
