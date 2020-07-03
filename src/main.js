@@ -22,11 +22,23 @@ function displayExchange(exchange) {
   const amount = parseInt($('#amount').val()).toFixed(2);
   const inputName = formatter($('#convertFrom').children(':selected').attr('id'));
   const outputName = formatter($('#convertTo').children(':selected').attr('id'));
+  $('#output').show();
   $('#output').html(`<p>${amount} ${inputName} is worth ${exchange} ${outputName}</p>`);
 }
 
 function displayError(message) {
+  $('#output').show();
   $("#output").html(`<p>${message}</p>`);
+}
+
+function gatherUserInput() {
+  const amount = parseInt($("#amount").val());
+  if (!amount) {
+    return;
+  }
+  const convertFrom = $('#convertFrom').val();
+  const convertTo = $('#convertTo').val();
+  return [amount, convertFrom, convertTo];
 }
 
 $(document).ready(function() {
@@ -36,12 +48,10 @@ $(document).ready(function() {
     event.preventDefault();
     (async ()=>{
       try {
-        const amount = parseInt($("#amount").val());
+        const [amount, convertFrom, convertTo] = gatherUserInput();
         if (!amount) {
-          throw Error('Please select an amount to be converted');
+          throw Error('Please enter an amount to be conveted');
         }
-        const convertFrom = $('#convertFrom').val();
-        const convertTo = $('#convertTo').val();
         if (!currencyService.currencyExchange || currencyService.currencyExchange === 'Error retrieving conversion rates') {
           await currencyService.currencyInitialize();
         }
@@ -49,7 +59,6 @@ $(document).ready(function() {
           throw Error('Error retrieving conversion rates');
         }
         const exchange = convertCurrency(amount, convertFrom, convertTo, currencyService);
-        $('#output').show();
         if (convertCurrency) {
           displayExchange(exchange);
         } else {
