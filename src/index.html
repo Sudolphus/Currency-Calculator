@@ -5,7 +5,27 @@
   </head>
   <body>
     <div class="container">
-      <button class="btn btn-info" id="getRates">Get Rates</button>
+      
+      <form>
+        <div class="form-group">
+          <label for='convertFrom'>Currency To Convert From: </label>
+          <select class='form-control' id='convertFrom'>
+
+          </select>
+        </div>
+        <div class="form-group">
+          <label for='convertTo'>Currency To Convert To: </label>
+          <select class='form-control' id='convertTo'>
+            
+          </select>
+        </div>
+
+        <button class='btn btn-info' type="submit">Convert</button>
+      </form>
+
+      <div id="output">
+        
+      </div>
     </div>
   </body>
 </html>
